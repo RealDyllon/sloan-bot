@@ -9,6 +9,19 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@deno/shim-deno-test@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@deno/shim-deno-test/-/shim-deno-test-0.4.0.tgz#2ff56821854c51323c0cd08a4a56d668f84367ba"
+  integrity sha512-oYWcD7CpERZy/TXMTM9Tgh1HD/POHlbY9WpzmAk+5H8DohcxG415Qws8yLGlim3EaKBT2v3lJv01x4G0BosnaQ==
+
+"@deno/shim-deno@~0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@deno/shim-deno/-/shim-deno-0.11.0.tgz#02b3e56feb8ecca8caf8498ad3de48f0d91e23e9"
+  integrity sha512-z5FRYleehfz1Z0Wp9jilB98cJRGV2HYiLN0FZu1/xwLrQk+hk5VaNKp1nEoyGrUM4MLruTlnhEbqHJwxfnbPLw==
+  dependencies:
+    "@deno/shim-deno-test" "^0.4.0"
+    which "^2.0.2"
+
 "@eslint/eslintrc@^2.0.0":
   version "2.0.0"
   resolved "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-2.0.0.tgz"
@@ -29,7 +42,16 @@
   resolved "https://registry.npmjs.org/@eslint/js/-/js-8.35.0.tgz"
   integrity sha512-JXdzbRiWclLVoD8sNUjR443VVlYqiYmDVT6rGUEIEHU5YJW0gaVZwV2xgM7D4arkvASqD0IlLUVjHiFuxaftRw==
 
-"@grammyjs/types@^2.12.1":
+"@grammyjs/conversations@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@grammyjs/conversations/-/conversations-1.1.1.tgz#2a0ea2fb1379fe97967864163d5bc619fbd92787"
+  integrity sha512-cgNvxIXaZT1eVw1ygdjCMvOY9m2Hk5iAwVjpjKSYpBSOyTBUV30/c0SEvCl+wVgTQpmd5m5E8WLfGMT4k4bdug==
+  dependencies:
+    "@grammyjs/types" "^2.8.2"
+    debug "^4.3.4"
+    o-son "^1.0.0"
+
+"@grammyjs/types@^2.12.1", "@grammyjs/types@^2.8.2":
   version "2.12.1"
   resolved "https://registry.npmjs.org/@grammyjs/types/-/types-2.12.1.tgz"
   integrity sha512-1hO6esfdo42mSvyArPHrlgSY/fgerTuVNAbSD5ZKHS/w5ZyrkA4pRp3VHK2XE3fm9/uMBT/39i8pPvx0+Kbxjg==
@@ -1616,6 +1638,13 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   resolved "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
+o-son@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/o-son/-/o-son-1.0.1.tgz#0e4f575a5c232fb542ab4e73e897b1c0d131b4c3"
+  integrity sha512-u3X+gVI4BalcHsFe75miy3UxG3pNcJzXDCS8N5eJLlYY1EdiUC8amUsbXMWlAqJUKJgGTM9OBqAuxvTUACKs2g==
+  dependencies:
+    "@deno/shim-deno" "~0.11.0"
+
 object-inspect@^1.12.2, object-inspect@^1.9.0:
   version "1.12.3"
   resolved "https://registry.npmjs.org/object-inspect/-/object-inspect-1.12.3.tgz"
@@ -2221,7 +2250,7 @@ which-typed-array@^1.1.9:
     has-tostringtag "^1.0.0"
     is-typed-array "^1.1.10"
 
-which@^2.0.1:
+which@^2.0.1, which@^2.0.2:
   version "2.0.2"
   resolved "https://registry.npmjs.org/which/-/which-2.0.2.tgz"
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==

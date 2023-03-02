@@ -1,9 +1,26 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "module": "CommonJS",
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
     "outDir": "dist"
   },
-  "include": ["src/bot.ts", "environment.d.ts"],
+  "lib": ["esnext"],
+  "include": ["src/**/*.ts", "environment.d.ts"],
   "exclude": ["node_modules"]
 }
