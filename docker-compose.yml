@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  sloan:
+    container_name: sloan
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+#    ports:
+#      - "80:80"
+    env_file:
+      - .env
