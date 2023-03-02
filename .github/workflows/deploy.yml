@@ -20,10 +20,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: lowercase-ify REPO name
-        run: |
-          echo "repository_lowercase=${github.repository}" | tr '[:upper:]' '[:lower:]' >> ${GITHUB_ENV}
-
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -31,5 +27,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ env.repository_lowercase }}:${{ github.sha }}
-            ghcr.io/${{ env.repository_lowercase }}:latest
+            ghcr.io/realdyllon/sloan-bot:${{ github.sha }}
+            ghcr.io/realdyllon/sloan-bot:latest
