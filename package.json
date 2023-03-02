@@ -1,0 +1,57 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "Telegram Bot that greets people, powered by Cyclic.",
+  "main": "dist/bot.js",
+  "engines": {
+    "node": ">=16.0.0",
+    "yarn": ">=1.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/bot.js",
+    "dev": "env-cmd ts-node-dev src/bot.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eludadev/telegram-bot.git"
+  },
+  "keywords": [
+    "chat",
+    "bot",
+    "social-media",
+    "bots",
+    "telegram",
+    "telegram-bot",
+    "chatbot"
+  ],
+  "author": "eludadev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eludadev/telegram-bot/issues"
+  },
+  "homepage": "https://github.com/eludadev/telegram-bot#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/lodash": "^4.14.188",
+    "@types/node": "^18.11.7",
+    "@types/node-fetch": "^2.6.2",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
+    "env-cmd": "^10.1.0",
+    "eslint": "^8.35.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.4",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "grammy": "^1.11.2",
+    "lodash": "^4.17.21"
+  }
+}
