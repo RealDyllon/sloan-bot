@@ -22,7 +22,7 @@ jobs:
 
       - name: lowercase-ify REPO name
         run: |
-          echo "REPO=${github.repository,,}" >>${GITHUB_ENV}
+          echo "repository_lowercase=${github.repository}" | tr '[:upper:]' '[:lower:]' >> ${GITHUB_ENV}
 
       - name: Build and push
         uses: docker/build-push-action@v2
@@ -31,5 +31,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ env.REPO }}:${{ github.sha }}
-            ghcr.io/${{ env.REPO }}:latest
+            ghcr.io/${{ env.repository_lowercase }}:${{ github.sha }}
+            ghcr.io/${{ env.repository_lowercase }}:latest
