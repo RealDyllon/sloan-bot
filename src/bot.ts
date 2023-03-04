@@ -4,6 +4,9 @@ import { ChatCompletionRequestMessageRoleEnum, Configuration, OpenAIApi } from "
 import { yoMiddleWare } from "./commands/yo";
 import { allowedUsers } from "./allowedUsers";
 
+const OPENAI_MAX_TOKENS = 1000;
+const MAX_MESSAGES = 20;
+
 const configuration = new Configuration({
   organization: process.env.OPENAI_ORG,
   apiKey: process.env.OPENAI_API_KEY
@@ -78,7 +81,7 @@ bot.on("message", async (ctx) => {
     .createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: ctx.session.previousMessages.map(({ role, content }) => ({ role, content })),
-      max_tokens: 100
+      max_tokens: OPENAI_MAX_TOKENS
     })
     .then(async (completion) => {
       const completionString =
@@ -96,7 +99,7 @@ bot.on("message", async (ctx) => {
       // reply
       await ctx.reply(completionString);
 
-      if (ctx.session.previousMessages.length > 10) {
+      if (ctx.session.previousMessages.length > MAX_MESSAGES) {
         ctx.session.previousMessages = [];
         await ctx.reply("I'm getting tired, let's reset the chat state");
       }
