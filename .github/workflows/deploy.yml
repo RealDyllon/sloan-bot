@@ -29,3 +29,30 @@ jobs:
           tags: |
             ghcr.io/realdyllon/sloan-bot:${{ github.sha }}
             ghcr.io/realdyllon/sloan-bot:latest
+
+
+  deploy-container:
+    name: Deploy Docker Container
+    needs: build-image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Pull and run docker images
+        env:
+          PRIVATE_KEY: ${{ secrets.DO_SSH_KEY  }}
+          HOSTNAME: ${{ secrets.DO_HOSTNAME  }}
+          USER_NAME: ${{ secrets.DO_USERNAME  }}
+        run: |
+          pwd
+          ls
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          scp -o StrictHostKeyChecking=no -i private_key ./docker-compose.yml ${USER_NAME}@${HOSTNAME}:/root/containers
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+            cd /root/containers &&
+            docker compose pull &&
+            docker compose up -d
+          '
+
+
