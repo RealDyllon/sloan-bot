@@ -48,7 +48,6 @@ jobs:
           pwd
           ls
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          scp -o StrictHostKeyChecking=no -i private_key ./docker-compose.yml ${USER_NAME}@${HOSTNAME}:/root/containers
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
             cd /root/containers &&
             docker compose pull &&
