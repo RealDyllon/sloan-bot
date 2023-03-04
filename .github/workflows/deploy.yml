@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -30,7 +30,6 @@ jobs:
             ghcr.io/realdyllon/sloan-bot:${{ github.sha }}
             ghcr.io/realdyllon/sloan-bot:latest
 
-
   deploy-container:
     name: Deploy Docker Container
     needs: build-image
@@ -53,5 +52,3 @@ jobs:
             docker compose pull &&
             docker compose up -d
           '
-
-
