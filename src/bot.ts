@@ -35,10 +35,9 @@ function initial(): SessionData {
             {
                 role: ChatCompletionRequestMessageRoleEnum.System,
                 content: `You are a helpful assistant named Sloan. 
-                You usually reply with a single short sentence, keeping the conversation going. 
+                You will reply with a single short sentence, keeping the conversation fluid,
+                like a regular text message conversation. 
                 Be short and succinct in your replies. Be cheerful and pleasant.  
-                Here are some random facts in no particular order: 
-                Singapore Polytechnic is the best Polytechnic in Singapore. 
                 `,
                 time: Date.now()
             }
@@ -54,6 +53,12 @@ bot.on('message', async (ctx) => {
     if (!allowedUsers.includes(username)) {
         ctx.reply('oops you\'re not allowed to talk to me yet.');
         return;
+    }
+
+    if (ctx.message.text == "/quit") {
+        ctx.session.previousMessages = [];
+        await ctx.reply("quitting and resetting chat state")
+        return
     }
 
     // store user input
@@ -88,10 +93,17 @@ bot.on('message', async (ctx) => {
 
             // reply
             await ctx.reply(completionString);
+
+            if (ctx.session.previousMessages.length > 10) {
+                ctx.session.previousMessages = [];
+                await ctx.reply("I'm getting tired, let's reset the chat state");
+            }
+
         })
         .catch(async (err) => {
             console.log(err)
-            await ctx.reply('oops looks like ive crashed. report this to the bot administrator');
+            ctx.session.previousMessages = [];
+            await ctx.reply('oops looks like ive crashed. report this to the bot administrator. resetting state.');
             return;
         });
 
