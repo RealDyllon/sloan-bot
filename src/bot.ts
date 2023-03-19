@@ -4,8 +4,11 @@ import { ChatCompletionRequestMessageRoleEnum, Configuration, OpenAIApi } from "
 import { yoMiddleWare } from "./commands/yo";
 import { allowedUsers } from "./allowedUsers";
 
-const OPENAI_MAX_TOKENS = 1000;
-const MAX_MESSAGES = 20;
+const OPENAI_MAX_TOKENS = process.env.OPENAI_MAX_TOKENS || 1000;
+const MAX_MESSAGES = process.env.MAX_MESSAGES || 20;
+
+// const IS_DEBUG = process.env.NODE_ENV === "development";
+// console.log("ID_DEBUG=", process.env.NODE_ENV);
 
 const configuration = new Configuration({
   organization: process.env.OPENAI_ORG,
