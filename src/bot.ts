@@ -4,7 +4,7 @@ import { ChatCompletionRequestMessageRoleEnum, Configuration, OpenAIApi } from "
 import { yoMiddleWare } from "./commands/yo";
 import { allowedUsers } from "./allowedUsers";
 
-const OPENAI_MAX_TOKENS: number = parseInt(process.env.OPENAI_MAX_TOKENS || "") || 1000;
+// const OPENAI_MAX_TOKENS: number = parseInt(process.env.OPENAI_MAX_TOKENS || "") || 1000;
 const MAX_MESSAGES: number = parseInt(process.env.MAX_MESSAGES || "") || 20;
 
 // const IS_DEBUG = process.env.NODE_ENV === "development";
@@ -84,7 +84,7 @@ bot.on("message", async (ctx) => {
     .createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: ctx.session.previousMessages.map(({ role, content }) => ({ role, content })),
-      max_tokens: OPENAI_MAX_TOKENS
+      // max_tokens: OPENAI_MAX_TOKENS
     })
     .then(async (completion) => {
       const completionString =
