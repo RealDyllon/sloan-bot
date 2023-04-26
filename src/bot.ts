@@ -7,6 +7,7 @@ import * as fs from 'fs';
 import path from 'path';
 import got from 'got';
 import { PassThrough } from 'stream';
+import { fileURLToPath } from 'url';
 
 // const OPENAI_MAX_TOKENS: number = parseInt(process.env.OPENAI_MAX_TOKENS || "") || 1000;
 const MAX_MESSAGES: number = parseInt(process.env.MAX_MESSAGES || '') || 20;
@@ -40,6 +41,8 @@ const bot = new Bot<MyContext>(process.env.TELEGRAM_TOKEN || '');
 //////
 
 // read file at env var path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const systemPrompt = fs.readFileSync(path.resolve(__dirname, '/botdata/system_prompt.txt'), 'utf8');
 
 const initialChatPreviousMessages =
