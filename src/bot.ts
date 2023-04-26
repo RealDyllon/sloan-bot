@@ -96,10 +96,10 @@ bot.on('message', async (ctx) => {
             model: 'gpt-3.5-turbo',
             messages: ctx.session.previousMessages.map(({ role, content }) => ({ role, content })),
             // max_tokens: OPENAI_MAX_TOKENS
-            temperature: parseInt(process.env.CHATGPT_TEMPERATURE ?? "") || null,
-            top_p: parseInt(process.env.CHATGPT_TOP_P ?? "") || null,
-            presence_penalty: parseInt(process.env.CHATGPT_PRESENCE_PENALTY ?? "") || null,
-            frequency_penalty: parseInt(process.env.CHATGPT_FREQUENCY_PENALTY ?? "") || null,
+            temperature: parseInt(process.env.CHATGPT_TEMPERATURE ?? "") || 1,
+            top_p: parseInt(process.env.CHATGPT_TOP_P ?? "") || 1,
+            presence_penalty: parseInt(process.env.CHATGPT_PRESENCE_PENALTY ?? "") || 0,
+            frequency_penalty: parseInt(process.env.CHATGPT_FREQUENCY_PENALTY ?? "") || 0,
         })
         .then(async (completion) => {
             const completionString =
@@ -133,6 +133,11 @@ bot.on('message', async (ctx) => {
 });
 
 /////
+
+bot.on('message:audio', async (ctx) => {
+   // todo: handle audio
+   await ctx.reply('sorry i can\'t handle voice notes yet');
+});
 
 // Handle the /yo command to greet the user
 yoMiddleWare(bot);
