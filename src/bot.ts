@@ -94,8 +94,12 @@ bot.on('message', async (ctx) => {
     await openai
         .createChatCompletion({
             model: 'gpt-3.5-turbo',
-            messages: ctx.session.previousMessages.map(({ role, content }) => ({ role, content }))
+            messages: ctx.session.previousMessages.map(({ role, content }) => ({ role, content })),
             // max_tokens: OPENAI_MAX_TOKENS
+            temperature: parseInt(process.env.CHATGPT_TEMPERATURE ?? "") || null,
+            top_p: parseInt(process.env.CHATGPT_TOP_P ?? "") || null,
+            presence_penalty: parseInt(process.env.CHATGPT_PRESENCE_PENALTY ?? "") || null,
+            frequency_penalty: parseInt(process.env.CHATGPT_FREQUENCY_PENALTY ?? "") || null,
         })
         .then(async (completion) => {
             const completionString =
