@@ -1,8 +1,8 @@
 import { Bot, Context, session, SessionFlavor, webhookCallback } from 'grammy';
 import express from 'express';
 import { ChatCompletionRequestMessageRoleEnum, Configuration, OpenAIApi } from 'openai';
-import { yoMiddleWare } from './commands/yo';
-import { allowedUsers } from './allowedUsers';
+import { yoMiddleWare } from './commands/yo.js';
+import { allowedUsers } from './allowedUsers.js';
 import * as fs from 'fs';
 import path from 'path';
 import got from 'got';
