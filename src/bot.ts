@@ -134,7 +134,7 @@ bot.on('message:text', async (ctx) => {
 
 /////
 
-bot.on('message:audio', async (ctx) => {
+bot.on('message:voice', async (ctx) => {
    // todo: handle audio
    await ctx.reply('sorry i can\'t handle voice notes yet');
 });
