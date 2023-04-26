@@ -5,6 +5,8 @@ import { yoMiddleWare } from './commands/yo';
 import { allowedUsers } from './allowedUsers';
 import * as fs from 'fs';
 import path from 'path';
+import got from 'got';
+import { PassThrough } from 'stream';
 
 // const OPENAI_MAX_TOKENS: number = parseInt(process.env.OPENAI_MAX_TOKENS || "") || 1000;
 const MAX_MESSAGES: number = parseInt(process.env.MAX_MESSAGES || '') || 20;
@@ -96,10 +98,10 @@ bot.on('message:text', async (ctx) => {
             model: 'gpt-3.5-turbo',
             messages: ctx.session.previousMessages.map(({ role, content }) => ({ role, content })),
             // max_tokens: OPENAI_MAX_TOKENS
-            temperature: parseInt(process.env.CHATGPT_TEMPERATURE ?? "") || 1,
-            top_p: parseInt(process.env.CHATGPT_TOP_P ?? "") || 1,
-            presence_penalty: parseInt(process.env.CHATGPT_PRESENCE_PENALTY ?? "") || 0,
-            frequency_penalty: parseInt(process.env.CHATGPT_FREQUENCY_PENALTY ?? "") || 0,
+            temperature: parseInt(process.env.CHATGPT_TEMPERATURE ?? '') || 1,
+            top_p: parseInt(process.env.CHATGPT_TOP_P ?? '') || 1,
+            presence_penalty: parseInt(process.env.CHATGPT_PRESENCE_PENALTY ?? '') || 0,
+            frequency_penalty: parseInt(process.env.CHATGPT_FREQUENCY_PENALTY ?? '') || 0
         })
         .then(async (completion) => {
             const completionString =
@@ -135,10 +137,46 @@ bot.on('message:text', async (ctx) => {
 /////
 
 bot.on('message:voice', async (ctx) => {
-   // todo: handle audio
-   // await ctx.reply('sorry i can\'t handle voice notes yet');
-   const voiceNote = ctx.message.voice;
-   await ctx.reply(JSON.stringify(voiceNote))
+    try {
+
+
+        const voiceNote = ctx.message.voice;
+
+        // download voice note to buffer
+        const fileUrl = `https://api.telegram.org/file/bot${process.env.TELEGRAM_TOKEN}/${voiceNote.file_id}`;
+
+        const downloadStream = got.stream(fileUrl);
+        const fileReadStream = new PassThrough();
+
+        downloadStream
+            .on('downloadProgress', ({ transferred, total, percent }) => {
+                const percentage = Math.round(percent * 100);
+                console.error(`progress: ${transferred}/${total} (${percentage}%)`);
+            })
+            .on('error', (error) => {
+                console.error(`Download failed: ${error.message}`);
+            });
+
+        fileReadStream
+            .on('error', (error) => {
+                console.error(`Read failed: ${error.message}`);
+            })
+            .on('finish', () => {
+                console.error(`Read finished`);
+            });
+
+        downloadStream.pipe(fileReadStream);
+
+        const resp = await openai.createTranscription(
+            fileReadStream,
+            'whisper-1'
+        );
+
+        await ctx.reply(resp.data.text);
+    } catch (err) {
+        console.error(err);
+        await ctx.reply('oops looks like ive crashed. report this to the bot administrator. resetting state.');
+    }
 });
 
 // Handle the /yo command to greet the user
