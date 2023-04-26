@@ -63,7 +63,7 @@ function initial(): SessionData {
 
 bot.use(session({ initial }));
 
-bot.on('message', async (ctx) => {
+bot.on('message:text', async (ctx) => {
     const username = ctx.from?.username ?? '';
 
     if (!allowedUsers.includes(username)) {
