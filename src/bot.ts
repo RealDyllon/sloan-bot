@@ -136,7 +136,9 @@ bot.on('message:text', async (ctx) => {
 
 bot.on('message:voice', async (ctx) => {
    // todo: handle audio
-   await ctx.reply('sorry i can\'t handle voice notes yet');
+   // await ctx.reply('sorry i can\'t handle voice notes yet');
+   const voiceNote = ctx.message.voice;
+   await ctx.reply(JSON.stringify(voiceNote))
 });
 
 // Handle the /yo command to greet the user
