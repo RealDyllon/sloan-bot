@@ -37,25 +37,27 @@ const bot = new Bot<MyContext>(process.env.TELEGRAM_TOKEN || '');
 
 //////
 
+// read file at env var path
+const systemPrompt = fs.readFileSync(path.resolve(__dirname, '/botdata/system_prompt.txt'), 'utf8');
+
+const initialChatPreviousMessages =
+    [
+        {
+            role: ChatCompletionRequestMessageRoleEnum.System,
+            // content: `You are a helpful assistant named Sloan.
+            //         You will reply with a single short sentence, keeping the conversation fluid,
+            //         like a regular text message conversation.
+            //         Be short and succinct in your replies. Be cheerful and pleasant.
+            //         `,
+            content: systemPrompt,
+            time: Date.now()
+        }
+    ];
+
 function initial(): SessionData {
-
-    // read file at env var path
-    const systemPrompt = fs.readFileSync(path.resolve(__dirname, '/botdata/system_prompt.txt'), 'utf8');
-
     return {
         lastUserResponseTime: 0,
-        previousMessages: [
-            {
-                role: ChatCompletionRequestMessageRoleEnum.System,
-                // content: `You are a helpful assistant named Sloan.
-                //         You will reply with a single short sentence, keeping the conversation fluid,
-                //         like a regular text message conversation.
-                //         Be short and succinct in your replies. Be cheerful and pleasant.
-                //         `,
-                content: systemPrompt,
-                time: Date.now()
-            }
-        ]
+        previousMessages: initialChatPreviousMessages
     };
 }
 
@@ -70,7 +72,7 @@ bot.on('message', async (ctx) => {
     }
 
     if (ctx.message.text == '/quit') {
-        ctx.session.previousMessages = [];
+        ctx.session.previousMessages = initialChatPreviousMessages;
         await ctx.reply('quitting and resetting chat state');
         return;
     }
@@ -86,6 +88,8 @@ bot.on('message', async (ctx) => {
     // call api
     // const response = await openai.listEngines()
     // console.log(response);
+
+    await bot.api.sendChatAction(ctx.chat.id, 'typing');
 
     await openai
         .createChatCompletion({
