@@ -10,7 +10,7 @@ import { PassThrough } from 'stream';
 import { fileURLToPath } from 'url';
 
 // const OPENAI_MAX_TOKENS: number = parseInt(process.env.OPENAI_MAX_TOKENS || "") || 1000;
-const MAX_MESSAGES: number = parseInt(process.env.MAX_MESSAGES || '') || 20;
+// const MAX_MESSAGES: number = parseInt(process.env.MAX_MESSAGES || '') || 20;
 
 // const IS_DEBUG = process.env.NODE_ENV === "development";
 // console.log("ID_DEBUG=", process.env.NODE_ENV);
@@ -118,14 +118,18 @@ bot.on('message:text', async (ctx) => {
                 time: Date.now()
             };
             ctx.session.previousMessages.push(newAssistantMessage);
+            // add initial prompt in case it gets left out.
+            if (ctx.session.previousMessages.length % 10 == 0) {
+                ctx.session.previousMessages.push(initialChatPreviousMessages[0])
+            }
 
             // reply
             await ctx.reply(completionString);
 
-            if (ctx.session.previousMessages.length > MAX_MESSAGES) {
-                ctx.session.previousMessages = [];
-                await ctx.reply('I\'m getting tired, let\'s reset the chat state');
-            }
+            // if (ctx.session.previousMessages.length > MAX_MESSAGES) {
+            //     ctx.session.previousMessages = [];
+            //     await ctx.reply('I\'m getting tired, let\'s reset the chat state');
+            // }
         })
         .catch(async (err) => {
             console.log(err);
