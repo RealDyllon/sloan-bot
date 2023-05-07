@@ -133,7 +133,7 @@ bot.on('message:text', async (ctx) => {
         })
         .catch(async (err) => {
             console.log(err);
-            ctx.session.previousMessages = [];
+            ctx.session.previousMessages = initialChatPreviousMessages;
             await ctx.reply(
                 'oops looks like ive crashed. report this to the bot administrator. resetting state.'
             );
@@ -190,7 +190,7 @@ bot.on('message:voice', async (ctx) => {
 yoMiddleWare(bot);
 
 bot.command('quit', (ctx) => {
-    ctx.session.previousMessages = []; // wipe session
+    ctx.session.previousMessages = initialChatPreviousMessages; // wipe session
     return ctx.reply(`OK i'll reset chat state, 
     and forget about all previous messages
 `);
